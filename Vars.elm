@@ -1,7 +1,6 @@
 module Vars exposing (..)
 
 import Dict exposing (Dict)
-import Maybe.Extra
 
 
 type Var
@@ -108,4 +107,14 @@ unify a b substMap =
         )
         walkedA
         walkedB
-        |> Maybe.Extra.join
+        |> maybeJoin
+
+
+maybeJoin : Maybe (Maybe a) -> Maybe a
+maybeJoin maybeMaybe =
+    case maybeMaybe of
+        Just maybe ->
+            maybe
+
+        Nothing ->
+            Nothing

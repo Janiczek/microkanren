@@ -1,6 +1,6 @@
 module Main exposing (main)
 
-import Goals exposing ((===), Goal)
+import Goals exposing (Goal, equals)
 import Html as H exposing (Html)
 import Vars exposing (Value(..), Var(..))
 
@@ -18,13 +18,13 @@ conditions =
     Goals.with2
         (\a b ->
             Goals.orMany
-                [ a === b
+                [ equals a b
                 , Goals.and
-                    (a === Vars.NumValue 8)
-                    (b === Vars.NumValue 9)
+                    (equals a (Vars.NumValue 8))
+                    (equals b (Vars.NumValue 9))
                 , Goals.and
-                    (a === b)
-                    (b === Vars.NumValue 42)
+                    (equals a b)
+                    (equals b (Vars.NumValue 42))
                 ]
         )
 
@@ -32,7 +32,7 @@ conditions =
 viewPossibility : Int -> List ( Var, Value ) -> Html msg
 viewPossibility index possibility =
     H.li []
-        [ H.text ("Possibility " ++ toString (index + 1))
+        [ H.text ("Possibility " ++ String.fromInt (index + 1))
         , H.ul []
             (possibility
                 |> List.map
@@ -40,14 +40,14 @@ viewPossibility index possibility =
                         H.li []
                             [ H.text <|
                                 "var "
-                                    ++ toString varId
+                                    ++ String.fromInt varId
                                     ++ " = "
                                     ++ (case value of
                                             VarValue (Var varId2) ->
-                                                "var " ++ toString varId2
+                                                "var " ++ String.fromInt varId2
 
                                             NumValue num ->
-                                                toString num
+                                                String.fromInt num
                                        )
                             ]
                     )

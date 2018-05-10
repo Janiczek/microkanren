@@ -22,8 +22,8 @@ type alias Goal =
     State -> Stream State
 
 
-(===) : Value -> Value -> Goal
-(===) a b =
+equals : Value -> Value -> Goal
+equals a b =
     \state ->
         state.substMap
             |> unify a b
@@ -149,8 +149,8 @@ andMany goals =
 {-| The `conde` macro. Disjunction of conjunctions.
 
     (conde
-      [(=== a 1) (=== b 2)]
-      [(=== a 7) (=== b 12)})
+      [(equals a 1) (equals b 2)]
+      [(equals a 7) (equals b 12)})
 
 Can be read as:
 
